@@ -7,7 +7,7 @@
 // Action Type: After Events Rendered
 // Open in new window: No
 
-if (typeof agendaCheck !== "undefined") {
+if (typeof agendaCheck !== "undefined" && !params.data.fromViewChange) {
   try {
     // Only run if the agendaCheck function has been defined from Scriptable
     agendaCheck(function () {
