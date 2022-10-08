@@ -2,6 +2,13 @@
 // These must be at the very top of the file. Do not edit.
 // icon-color: purple; icon-glyph: calendar;
 
+/* *****************************************
+Name	: dayback-agenda-widget.js
+Author	: Tanner Ellen
+Version	: 1.0.0
+Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
+***************************************** */
+
 //
 // Configuration ------------>
 //
