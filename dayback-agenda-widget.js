@@ -9,9 +9,9 @@ Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
 // Configuration ------------------>
 // ---------------------------------
 
-const USER_TOKEN = '';
+const USER_TOKEN = '';  // The DayBack user token used to sign in
 
-const BOOKMARK_ID = ''; // The DayBack bookmark ID used to filter events
+const BOOKMARK = ''; // The DayBack bookmark URL or bookmark ID to retrieve events
 
 const HOUR_THRESHOLD_FOR_NEXT_DAY = 19; // The hour to switch to the next day, a number 0 - 23 (7pm default)
 
@@ -53,6 +53,16 @@ const domain = 'https://tanner.dayback.me';
 
 const now = new Date();
 
+// Get valid bookark id from url or just the ID itself
+let bookmarkID = BOOKMARK.split('bookmarkID=');
+
+if (bookmarkID && bookmarkID[1]) {
+	bookmarkID = bookmarkID[1];
+}
+else {
+	bookmarkID = bookmarkID[0];
+}
+
 // Get tomorrows date
 let tomorrow = new Date(now);
 tomorrow.setDate(tomorrow.getDate() + 1);
@@ -68,7 +78,7 @@ const day = useDate.toLocaleString('default', {day: '2-digit'});
 
 const viewDate = year + '-' + month + '-' + day;
 
-const url = domain + '?userToken=' + USER_TOKEN + '/#/?date=' + viewDate + '&bookmarkID=' + BOOKMARK_ID;
+const url = domain + '?userToken=' + USER_TOKEN + '/#/?date=' + viewDate + '&bookmarkID=' + bookmarkID;
 
 log(url)
 const webview = new WebView();
