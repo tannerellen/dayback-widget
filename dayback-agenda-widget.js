@@ -80,17 +80,13 @@ const viewDate = year + '-' + month + '-' + day;
 
 const url = domain + '?userToken=' + USER_TOKEN + '/#/?date=' + viewDate + '&bookmarkID=' + bookmarkID;
 
-log(url)
 const webview = new WebView();
 await webview.loadURL(url);
 
 const widget = new ListWidget();
 widget.setPadding(0, 0, 0, 0);
 widget.url = url; // Where to go when the widget is clicked
-log('before colors')
 widget.backgroundColor  = new Color(COLORS.background);
-log('after colors')
-
 
 // Set refresh date to one hour from now
 let refreshDate = new Date(now);
@@ -105,13 +101,9 @@ if ((now.getHours() <= 23 && refreshDate.getHours() >= 0) || (thresholdForNextDa
 
 const script = 'window.agendaCheck = function(callback) {callback()}; "load";'; // The load string is set because the evaluate javascript function needs some type of content set 
 
-console.log('javascript')
 let eventsPayload = await webview.evaluateJavaScript(script, true);
-log('got payload')
-log(eventsPayload)
 
 //webview.present();
-
 
 // Create main parent stack
 const widgetStack = widget.addStack();
@@ -125,8 +117,6 @@ contentStack.setPadding(20, 20, 20, 20);
 
 
 buildWidget(eventsPayload);
-
-log(refreshDate);
 
 // Set next widget refresh date / This may be updated when building the widget
 widget.refreshAfterDate = refreshDate;
@@ -143,8 +133,6 @@ return eventsPayload;
 
 
 function buildWidget(eventsPayload) {
-log('build')
-log(eventsPayload)
 	const events = JSON.parse(eventsPayload).sort(compare);
 	let linesShown = 0;
 	let refreshDateUpdated;
