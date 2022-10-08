@@ -11,3 +11,9 @@ To install this widget follow these steps:
     * <a href="https://open.scriptable.app" target="_blank">Open the Scriptable App</a> and create a new script (+ Button in the top-right corner).
     * Name your script for example "DayBack Agenda" by simply tapping on "Untitled Script" in the top of the sreen.
     * Paste the code that you previously copied into the app and press "Done".
+
+3. Add the widget to your home-screen with the following steps:
+    * Go to your home-screen and add a new widget.
+    * Select the Scriptable App and choose the medium size widget.
+    * Press "Add Widget" and back on your home-screen press on the newly added widget-space.
+    * Select your script, and leave the rest blank, touch anywhere outside the widget when done.
