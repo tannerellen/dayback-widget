@@ -1,7 +1,3 @@
-// Variables used by Scriptable.
-// These must be at the very top of the file. Do not edit.
-// icon-color: purple; icon-glyph: calendar;
-
 /* *****************************************
 Name	: dayback-agenda-widget.js
 Author	: Tanner Ellen
@@ -9,9 +5,9 @@ Version	: 1.0.0
 Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
 ***************************************** */
 
-//
-// Configuration ------------>
-//
+// ---------------------------------
+// Configuration ------------------>
+// ---------------------------------
 
 const USER_TOKEN = '';
 
@@ -44,14 +40,14 @@ const TRANSLATIONS = {
 	'No events remaining': 'No events remaining',
 };
 
-//
-// End Configuration <--------------
-//
+// ----------------------------------
+// End Configuration <---------------
+// ----------------------------------
 
 
+// ------------------------------------------
 // You shouldn't need to edit below this line
-// =============================================
-//
+// ------------------------------------------
 
 const domain = 'https://tanner.dayback.me';
 
