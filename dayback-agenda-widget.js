@@ -6,30 +6,36 @@
 // Configuration ------------>
 //
 
-const userToken = '';
+const USER_TOKEN = '';
 
-const bookmarkID = ''; // The DayBack bookmark ID used to filter events
+const BOOKMARK_ID = ''; // The DayBack bookmark ID used to filter events
 
-const hourThresholdForNextDay = 19; // The hour to switch to the next day, a number 0 - 23
+const HOUR_THRESHOLD_FOR_NEXT_DAY = 19; // The hour to switch to the next day, a number 0 - 23 (7pm default)
 
-const maxLines = 3; // How many vertical lines of data are allowed to display
+const MAX_LINES = 3; // How many vertical lines of data are allowed to display
 
-const refreshInterval = 60; // How many minutes between widget data updates
+const REFRESH_INTERVAL = 60; // How many minutes between widget data updates
 
-const allDayOnTop = true; // Sort all day events to the top
+const ALL_DAY_ON_TOP = true; // Sort all day events to the top
 
-const showPastEvents = false; // Show events that have already ended
+const SHOW_PAST_EVENTS= false; // Show events that have already ended
 
-const widgetColor = '#171717'; // Hex color for widget background (use dark colors)
+const COLORS = { // All colors are hex values
+	background: '#171717', // Widget background (use dark colors)
+	textHeader: '#fe9e0a', // Header text and primary icon color
+	textPrimary: '#ffffff', // Primary bright text like the date and time
+	textSecondary: '#878787', // Secondary text like the event title
+	label: '#5a5a5a', // Labels and background info like the term more
+};
 
-const translations = {
+const TRANSLATIONS = {
 	// Change the term on the right side to translate
 	'Today': 'Today',
 	'Tomorrow': 'Tomorrow',
 	'more': 'more',
 	'No events scheduled': 'No events scheduled',
 	'No events remaining': 'No events remaining',
-}
+};
 
 //
 // End Configuration <--------------
@@ -40,6 +46,8 @@ const translations = {
 // =============================================
 //
 
+const domain = 'https://tanner.dayback.me';
+
 const now = new Date();
 
 // Get tomorrows date
@@ -47,7 +55,7 @@ let tomorrow = new Date(now);
 tomorrow.setDate(tomorrow.getDate() + 1);
 
 // Determine if tomorrow or today should be used
-const showTomorrow = now.getHours() >= hourThresholdForNextDay ? true : false;
+const showTomorrow = now.getHours() >= HOUR_THRESHOLD_FOR_NEXT_DAY ? true : false;
 const useDate = showTomorrow ? tomorrow : now;
 
 // Build date string to use for query
@@ -57,31 +65,37 @@ const day = useDate.toLocaleString('default', {day: '2-digit'});
 
 const viewDate = year + '-' + month + '-' + day;
 
-const url = 'https://app.dayback.com?userToken=' + userToken + '/#/?date=' + viewDate + '&bookmarkID=' + bookmarkID;
+const url = domain + '?userToken=' + USER_TOKEN + '/#/?date=' + viewDate + '&bookmarkID=' + BOOKMARK_ID;
 
+log(url)
 const webview = new WebView();
 await webview.loadURL(url);
 
 const widget = new ListWidget();
 widget.setPadding(0, 0, 0, 0);
 widget.url = url; // Where to go when the widget is clicked
-widget.backgroundColor  = new Color(widgetColor);
+log('before colors')
+widget.backgroundColor  = new Color(COLORS.background);
+log('after colors')
 
 
 // Set refresh date to one hour from now
 let refreshDate = new Date(now);
 // Add refresh interval
-refreshDate.setMinutes(now.getMinutes() + refreshInterval);
+refreshDate.setMinutes(now.getMinutes() + REFRESH_INTERVAL);
 
 // Refresh at the hour exactly if we are close to a threshold
-if ((now.getHours() <= 23 && refreshDate.getHours() >= 0) || (thresholdForNextDay !== 0 && now.getHours() < hourThresholdForNextDay && refreshDate.getHours() >= hourThresholdForNextDay)) {
+if ((now.getHours() <= 23 && refreshDate.getHours() >= 0) || (thresholdForNextDay !== 0 && now.getHours() < HOUR_THRESHOLD_FOR_NEXT_DAY && refreshDate.getHours() >= HOUR_THRESHOLD_FOR_NEXT_DAY)) {
 	refreshDate.setHours(now.getHours() + 1); // Set to the next hour from now
 	refreshDate.setMinutes(0, 0, 0); // Set minutes, seconds and miliseconds to zero
 }
 
 const script = 'window.agendaCheck = function(callback) {callback()}; "load";'; // The load string is set because the evaluate javascript function needs some type of content set 
 
+console.log('javascript')
 let eventsPayload = await webview.evaluateJavaScript(script, true);
+log('got payload')
+log(eventsPayload)
 
 //webview.present();
 
@@ -116,6 +130,8 @@ return eventsPayload;
 
 
 function buildWidget(eventsPayload) {
+log('build')
+log(eventsPayload)
 	const events = JSON.parse(eventsPayload).sort(compare);
 	let linesShown = 0;
 	let refreshDateUpdated;
@@ -124,11 +140,11 @@ function buildWidget(eventsPayload) {
   
 	for (let i = 0; i < events.length; i++) {
 		const endDate = new Date(events[i].end);
-    	if (!showPastEvents && !events[i].allDay && sortTimes(now, endDate) > 0) {
+    	if (!SHOW_PAST_EVENTS && !events[i].allDay && sortTimes(now, endDate) > 0) {
 			// Don't show events that have already happened
     		continue;
 		}
-  		if (linesShown < maxLines) {
+  		if (linesShown < MAX_LINES) {
     		setWidgetEntry(events[i]);
     		linesShown++;
     	
@@ -138,7 +154,7 @@ function buildWidget(eventsPayload) {
     		} 
   		}
   		else {
-    		setWidgetFooter(translations['more'] + '...');
+    		setWidgetFooter(TRANSLATIONS['more'] + '...');
     		break;
     	}
 	}
@@ -151,26 +167,26 @@ function buildWidget(eventsPayload) {
 // Widget building functions
 
 function setNoEvents() {
-	const noEventsText = showTomorrow ? translations['No events scheduled'] : translations['No events remaining'];
+	const noEventsText = showTomorrow ? TRANSLATIONS['No events scheduled'] : TRANSLATIONS['No events remaining'];
 	const stack = contentStack.addStack();
 	stack.layoutVertically();
 	stack.setPadding(0, 0, 0, 0);
 	stack.borderWidth = 0;
 	const txt = stack.addText(noEventsText);
-	txt.textColor = Color.gray();
+	txt.textColor = new Color(COLORS.label);
 	txt.font = Font.systemFont(16);
 
 	contentStack.addSpacer(10);
 }
 
 function setWidgetHeader() {
-  	const headerText = showTomorrow ? translations['Tomorrow'] : translations['Today'];
+  	const headerText = showTomorrow ? TRANSLATIONS['Tomorrow'] : TRANSLATIONS['Today'];
 	const stack = contentStack.addStack();
 	stack.layoutHorizontally();
 	stack.setPadding(0, 0, 0, 0);
 	stack.borderWidth = 0;
 	const txt = stack.addText(headerText);
-	txt.textColor = Color.orange();
+	txt.textColor = new Color(COLORS.textHeader);
 	txt.font = Font.systemFont(24);
 
 	stack.addSpacer();
@@ -178,7 +194,7 @@ function setWidgetHeader() {
 	const calendarIcon = showTomorrow ? SFSymbol.named('calendar.circle') : SFSymbol.named('clock');
 	//calendarIcon.applyFont(Font.systemFont(24)); // Doesn't appear to be needed, at least not at the current size
 	const calendarImg = stack.addImage(calendarIcon.image);
-	calendarImg.tintColor = Color.orange();
+	calendarImg.tintColor = new Color(COLORS.textHeader);
 	calendarImg.imageSize = new Size(30, 30);
 
 	contentStack.addSpacer(10);
@@ -191,7 +207,7 @@ function setWidgetFooter(footerText) {
 	stack.setPadding(0, 0, 0, 0);
 	stack.borderWidth = 0;
 	const txt = stack.addText(footerText);
-	txt.textColor = Color.gray();
+	txt.textColor = new Color(COLORS.label);
 	txt.font = Font.systemFont(14);
 	
 }
@@ -219,13 +235,13 @@ function setWidgetEntry(event) {
 	// Time
 	const time = rowStack.addText(event.timeDisplay);
 	time.lineLimit = 1;
-	time.textColor = Color.white();
+	time.textColor = new Color(COLORS.textPrimary);
 	time.font = Font.systemFont(14);
 
 	// Title
 	const txt = rowStack.addText(event.title);
 	txt.lineLimit = 1;
-	txt.textColor = Color.lightGray();
+	txt.textColor = new Color(COLORS.textSecondary);
 	txt.font = Font.systemFont(14);
 	
 	contentStack.addSpacer(6);
@@ -262,7 +278,7 @@ function compare(a,b) {
     	return;
   	}
   	
-  	if (!allDayOnTop) {
+  	if (!ALL_DAY_ON_TOP) {
     	// Put all day events on the bottom of the list
   		return Number(a.allDay) - Number(b.allDay) || a.sort - b.sort;
   	}
