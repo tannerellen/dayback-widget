@@ -2,13 +2,16 @@
 
 <a href="https://dayback.com" target="_blank">DayBack</a> Agenda Widget is an iOS widget made in <a href="https://scriptable.app/" target="_blank">Scriptable.app</a>. It displays todays agenda and tomorrows agenda after a certain cutoff time with data being pulled from a <a href="https://dayback.com" target="_blank">DayBack</a> bookmark.
 
-**Before getting started** it is recommended to create a bookmark just for you in <a href="https://dayback.com" target="_blank">DayBack</a> that filters just the events you want to see on your agenda. Some general guidelines for creating this bookmark are:
+## Before getting started
+ 
+It is recommended to create a bookmark just for you in <a href="https://dayback.com" target="_blank">DayBack</a> that filters just the events you want to see on your agenda. Some general guidelines for creating this bookmark are:
 * Make sure the bookmark is created in day list view.
 * Enable all calendars you want events to be shown from.
 * Utilize text filters to filter only events that are important to you. This usually entails filtering based on your name. a good starting point is "YourName or holidays" for exaple to see events assigned to you and any national holidays in Google Calendar. Read the <a href="https://docs.dayback.com/article/114-filter-options" target="_blank">documentation on text filters</a> to get the filtering just right.
 * It's recommended to close the sidebar when creating the bookmark for a better iPad experience.
 
-To install this widget follow these steps:
+## Installation
+
 1. Add a new "After Events Rendered" app action to DayBack:
     * Open <a href="https://raw.githubusercontent.com/tannerellen/dayback-widget/main/dayback-agenda-action.js" target="_blank">the action code here</a> and copy all the contents.
     * In DayBack navigate to "Administrator Settings", then "App Actions".
