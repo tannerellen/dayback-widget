@@ -43,3 +43,8 @@ It is recommended to create a bookmark just for you in <a href="https://dayback.
     * Select the Scriptable App and choose the medium size widget.
     * Press "Add Widget" and back on your home-screen press on the newly added widget-space.
     * Select your script, and leave the rest blank, touch anywhere outside the widget when done.
+
+7. Finishing up (Re-Authorize calendars)
+    * As a security measure DayBack deauthorizes any 3rd party calendar sources when accessing DayBack on a new device when using a userToken.
+    * You will need to access DayBack on any device and Authorize any calendar sources again (ie. Google Calendar).
+    * Now you are all done!
