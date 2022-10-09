@@ -9,9 +9,9 @@ Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
 // Configuration ------------------>
 // ---------------------------------
 
-const USER_TOKEN = '';  // The DayBack user token used to sign in
+const USER_TOKEN = 'Replace With User Token';  // The DayBack user token used to sign in
 
-const BOOKMARK = ''; // The DayBack bookmark URL or bookmark ID to retrieve events
+const BOOKMARK = 'Replace With Bookmark URL'; // The DayBack bookmark URL or bookmark ID to retrieve events
 
 const HOUR_THRESHOLD_FOR_NEXT_DAY = 19; // The hour to switch to the next day, a number 0 - 23 (7pm default)
 
