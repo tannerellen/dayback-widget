@@ -1,4 +1,4 @@
-# <a href="https://dayback.com" target="_blank">DayBack</a> Agenda Widget
+# DayBack Agenda Widget
 
 <a href="https://dayback.com" target="_blank">DayBack</a> Agenda Widget is an iOS widget made in <a href="https://scriptable.app/" target="_blank">Scriptable.app</a>. It displays todays agenda and tomorrows agenda after a certain cutoff time with data being pulled from a <a href="https://dayback.com" target="_blank">DayBack</a> bookmark.
 
