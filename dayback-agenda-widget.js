@@ -49,7 +49,7 @@ const TRANSLATIONS = {
 // You shouldn't need to edit below this line
 // ------------------------------------------
 
-const domain = 'https://tanner.dayback.me';
+const domain = 'https://app.dayback.com';
 
 const now = new Date();
 
