@@ -78,7 +78,9 @@ const day = useDate.toLocaleString('default', {day: '2-digit'});
 
 const viewDate = year + '-' + month + '-' + day;
 
-const url = domain + '?userToken=' + USER_TOKEN + '/#/?date=' + viewDate + '&bookmarkID=' + bookmarkID;
+const userTokenParamString = USER_TOKEN ? '?userToken=' + USER_TOKEN : ''
+
+const url = domain + userTokenParamString + '/#/?date=' + viewDate + '&bookmarkID=' + bookmarkID;
 
 const webview = new WebView();
 await webview.loadURL(url);
