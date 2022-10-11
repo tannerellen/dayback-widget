@@ -10,13 +10,41 @@ It is recommended to create a bookmark just for you in <a href="https://dayback.
 * Utilize text filters to filter only events that are important to you. This usually entails filtering based on your name. a good starting point is "YourName or holidays" for exaple to see events assigned to you and any national holidays in Google Calendar. Read the <a href="https://docs.dayback.com/article/114-filter-options" target="_blank">documentation on text filters</a> to get the filtering just right.
 * It's recommended to close the sidebar when creating the bookmark for a better iPad experience.
 
-## Installation
+# Installation
+
+There are two ways to install the DayBack Agendar Widget. The easy way is recommended.
+## The Easy Way (Assisted install with iOS shortcut)
 
 1. Add a new "After Events Rendered" app action to DayBack:
     * Open <a href="https://raw.githubusercontent.com/tannerellen/dayback-widget/main/dayback-agenda-action.js" target="_blank">the action code here</a> and copy all the contents.
     * In DayBack navigate to "Administrator Settings", then "App Actions".
     * Click "Add New App Action".
-    * Paste the code you copiedms into the "Javascript" edit box. Then select the type of "After Events Rendered". Optionaly you can give it a name of "Scriptable Widget" for easy identification.
+    * Paste the code you copied into the "Javascript" edit box. Then select the type of "After Events Rendered". Optionaly you can give it a name of "Scriptable Widget" for easy identification.
+
+2. <a href="https://scriptable.app/" target="_blank">Install Scriptable</a> on your iOS device
+
+3. Intall the iOS shortcut by downloading it here.
+
+4. Run the shortcut by <a href="shortcuts://run-shortcut?name=DayBack%20Widget%20Helper" target="_blank">clicking here</a> (or you can run it within the Shortcuts App).
+
+5. Follow the on screen prompts to complete widget installation and basic config.
+
+6. Add the widget to your home-screen with the following steps:
+    * Go to your home-screen and add a new widget.
+    * Select the Scriptable App and choose the medium size widget.
+    * Press "Add Widget" and back on your home-screen press on the newly added widget-space.
+    * Select your script, and leave the rest blank, touch anywhere outside the widget when done.
+
+Now you are all done!
+
+
+## The Hard Way (Manual install)
+
+1. Add a new "After Events Rendered" app action to DayBack:
+    * Open <a href="https://raw.githubusercontent.com/tannerellen/dayback-widget/main/dayback-agenda-action.js" target="_blank">the action code here</a> and copy all the contents.
+    * In DayBack navigate to "Administrator Settings", then "App Actions".
+    * Click "Add New App Action".
+    * Paste the code you copied into the "Javascript" edit box. Then select the type of "After Events Rendered". Optionaly you can give it a name of "Scriptable Widget" for easy identification.
 
 2. <a href="https://scriptable.app/" target="_blank">Install Scriptable</a> on your iOS device.
 
@@ -47,4 +75,5 @@ It is recommended to create a bookmark just for you in <a href="https://dayback.
 7. Finishing up (Re-Authorize calendars)
     * As a security measure DayBack deauthorizes any 3rd party calendar sources when accessing DayBack on a new device when using a userToken.
     * You will need to access DayBack on any device and Authorize any calendar sources again (ie. Google Calendar).
-    * Now you are all done!
+
+Now you are all done!
