@@ -16,16 +16,16 @@ There are two ways to install the DayBack Agendar Widget. The easy way is recomm
 ## The Easy Way (Assisted install with iOS shortcut)
 
 1. Add a new "After Events Rendered" app action to DayBack:
-    * Open <a href="https://raw.githubusercontent.com/tannerellen/dayback-widget/main/dayback-agenda-action.js" target="_blank">the action code here</a> and copy all the contents.
+    * Open [the action code here](https://raw.githubusercontent.com/tannerellen/dayback-widget/main/dayback-agenda-action.js) and copy all the contents.
     * In DayBack navigate to "Administrator Settings", then "App Actions".
     * Click "Add New App Action".
     * Paste the code you copied into the "Javascript" edit box. Then select the type of "After Events Rendered". Optionaly you can give it a name of "Scriptable Widget" for easy identification.
 
-2. <a href="https://scriptable.app/" target="_blank">Install Scriptable</a> on your iOS device
+2. [Install Scriptable](https://scriptable.app/) on your iOS device
 
-3. Intall the iOS shortcut by downloading it here.
+3. Intall the [DayBack Widget Helper iOS shortcut](https://www.icloud.com/shortcuts/4a2127c98382489b8c1655121041656e).
 
-4. Run the shortcut by <a href="shortcuts://run-shortcut?name=DayBack%20Widget%20Helper" target="_blank">clicking here</a> (or you can run it within the Shortcuts App).
+4. Run the shortcut by [clicking here](shortcuts://run-shortcut?name=DayBack%20Widget%20Helper) (or you can run it within the Shortcuts App).
 
 5. Follow the on screen prompts to complete widget installation and basic config.
 
