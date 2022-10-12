@@ -21,7 +21,13 @@ const REFRESH_INTERVAL = 60; // How many minutes between widget data updates
 
 const ALL_DAY_ON_TOP = true; // Sort all day events to the top
 
-const SHOW_PAST_EVENTS= false; // Show events that have already ended
+const SHOW_PAST_EVENTS = false; // Show events that have already ended
+
+const NOTIFICATIONS_ENABLED = false; // Set to true to show upcoming event notifications on your device
+
+const NOTIFICATIONS_MINUTES_BEFORE = 5; // How many minutes before event start to trigger notifications
+
+const NOTIFICATIONS_ALL_DAY_HOUR = 8; // The hour to notify for all day events 0 - 23 (since they don't have times)
 
 const COLORS = { // All colors are hex values
 	background: '#171717', // Widget background (use dark colors)
@@ -137,6 +143,7 @@ function buildWidget(eventsPayload) {
 	const events = JSON.parse(eventsPayload).sort(compare);
 	let linesShown = 0;
 	let refreshDateUpdated;
+	let footerSet;
   
 	setWidgetHeader();
   
@@ -156,9 +163,29 @@ function buildWidget(eventsPayload) {
     		} 
   		}
   		else {
-    		setWidgetFooter(TRANSLATIONS['more'] + '...');
-    		break;
+			if (!footerSet) {
+    			setWidgetFooter(TRANSLATIONS['more'] + '...');
+				footerSet = true;
+			}
     	}
+		// Set notifications
+		if (NOTIFICATIONS_ENABLED) {
+			let notificationDate = new Date(events[i].start);
+			if (events[i].allDay) {
+				notificationDate.setHours(NOTIFICATIONS_ALL_DAY_HOUR);
+			}
+
+			notificationDate.setMinutes(notificationDate.getMinutes() - NOTIFICATIONS_MINUTES_BEFORE, 0, 0);
+
+			const notificationOptions = {	
+				id: events[i].calendarID + '-' + events[i].eventID,
+				subtitle: 'Starts @ ' + events[i].timeDisplay,
+				body: events[i].title,
+				date: notificationDate,	
+			}
+
+				scheduleNotification(notificationOptions);
+		}
 	}
 
 	if (!linesShown) {
@@ -250,6 +277,29 @@ function setWidgetEntry(event) {
 }
 
 // Utility functions
+
+function scheduleNotification(options) {
+	// options object properies
+	// id: string
+	// title: string
+	// subtitle: string
+	// body: string
+	// notifyDate: date
+	
+	let notification = new Notification();
+	
+	notification.threadIdentifier = 'dbk-widget-agenda';
+	notification.identifier = options.id;
+	
+	notification.title = options.title ? options.title : 'DayBack Upcoming Event';
+	notification.subtitle = options.subtitle ? options.subtitle : '';
+	notification.body = options.body ? options.body : '';
+	
+	notification.sound = 'event';
+	notification.setTriggerDate(options.date);
+	
+	notification.schedule();
+}
 
 function sortTimes(timeA, timeB) {
 	return timeA.getTime() - timeB.getTime();
