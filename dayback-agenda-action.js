@@ -1,4 +1,4 @@
-// DayBack Agenda Widget Service v0.2.0
+// DayBack Agenda Widget Service v0.3.0
 // License: MIT
 
 // Purpose:
@@ -30,6 +30,8 @@ if (typeof agendaCheck !== "undefined") {
             : events[i].start.format("h:mm a") + " ";
           const title = events[i].title;
           const event = {
+            eventID: events[i].eventID,
+            calendarID: events[i].schedule.id,
             title: title.replace("\n", " | "),
             timeDisplay: timeDisplay,
             color: events[i].color,
