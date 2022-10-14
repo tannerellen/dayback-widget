@@ -1,7 +1,7 @@
 /* *****************************************
 Name	: dayback-agenda-widget.js
 Author	: Tanner Ellen
-Version	: 1.0.2
+Version	: 1.0.3
 Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
 ***************************************** */
 
@@ -148,13 +148,14 @@ function buildWidget(eventsPayload) {
 	setWidgetHeader();
   
 	for (let i = 0; i < events.length; i++) {
+		const title = stripHtmlTags(events[i].title);
 		const endDate = new Date(events[i].end);
     	if (!SHOW_PAST_EVENTS && !events[i].allDay && sortTimes(now, endDate) > 0) {
 			// Don't show events that have already happened
     		continue;
 		}
   		if (linesShown < MAX_LINES) {
-    		setWidgetEntry(events[i]);
+    		setWidgetEntry(events[i], title);
     		linesShown++;
     	
     		if (!refreshDateUpdated && !events[i].allDay && sortTimes(refreshDate, endDate) > 0) {
@@ -180,7 +181,7 @@ function buildWidget(eventsPayload) {
 			const notificationOptions = {	
 				id: events[i].calendarID + '-' + events[i].eventID,
 				subtitle: 'Starts @ ' + events[i].timeDisplay,
-				body: events[i].title,
+				body: title,
 				date: notificationDate,	
 			}
 
@@ -241,7 +242,7 @@ function setWidgetFooter(footerText) {
 	
 }
 
-function setWidgetEntry(event) {
+function setWidgetEntry(event, titleText) {
 	const stack = contentStack.addStack();
 	stack.layoutVertically();
 	stack.setPadding(0, 0, 0, 0);
@@ -268,7 +269,7 @@ function setWidgetEntry(event) {
 	time.font = Font.systemFont(14);
 
 	// Title
-	const txt = rowStack.addText(event.title);
+	const txt = rowStack.addText(titleText);
 	txt.lineLimit = 1;
 	txt.textColor = new Color(COLORS.textSecondary);
 	txt.font = Font.systemFont(14);
@@ -339,3 +340,27 @@ function compare(a,b) {
 		return a.sort - b.sort || Number(a.allDay) - Number(b.allDay);
 	}
 }
+
+function stripHtmlTags(text) {
+	if (!text) {
+		text = '';
+	}
+	text.replace(/(<([^>]+)>)/gi, '');
+
+	return decodeHtmlEntity(text);
+}
+
+function decodeHtmlEntity(text) {
+	text
+	.replace(/&nbsp;/g, ' ')
+	.replace(/&amp;/g, '&')
+	.replace(/&lt;/g, '<')
+	.replace(/&gt;/g, '>')
+	.replace(/&quot;/g, '"')
+	.replace(/&apos;/g, '\'')
+	.replace(/&#(\d+);/g, function(match, dec) {
+	  return String.fromCharCode(dec);
+	});
+
+	return text;
+};
