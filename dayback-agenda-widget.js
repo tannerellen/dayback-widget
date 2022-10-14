@@ -345,13 +345,13 @@ function stripHtmlTags(text) {
 	if (!text) {
 		text = '';
 	}
-	text.replace(/(<([^>]+)>)/gi, '');
+	text = text.replace(/(<([^>]+)>)/gi, '');
 
 	return decodeHtmlEntity(text);
 }
 
 function decodeHtmlEntity(text) {
-	text
+	text = text
 	.replace(/&nbsp;/g, ' ')
 	.replace(/&amp;/g, '&')
 	.replace(/&lt;/g, '<')
