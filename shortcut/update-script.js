@@ -6,14 +6,26 @@ let path = fm.joinPath(dir, name + ".js");
 
 const newScript = params.newScript;
 const oldScript = fm.readString(path);
+
+// If there is no existing script just return the new script
+if (!oldScript) {
+  return newScript;
+}
+
+// Get just the config blocks from the script files
 const oldConfig = getConfig(oldScript);
 const newConfig = getConfig(newScript);
+
+// Merge changes from old config into the new one
 const updatedConfig = updateConfig(oldConfig, newConfig);
+
+// Apply all config changes to the new script
 const updatedScript = applyConfig(updatedConfig, newScript);
 
 return updatedScript;
 Script.complete(fileContent);
 
+// Functions
 function applyConfig(config, script) {
   if (!config) {
     return script;
