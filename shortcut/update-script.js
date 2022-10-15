@@ -10,7 +10,6 @@ const oldConfig = getConfig(oldScript);
 const newConfig = getConfig(newScript);
 const updatedConfig = updateConfig(oldConfig, newConfig);
 const updatedScript = applyConfig(updatedConfig, newScript);
-// Need to merge config back to newScript
 
 return updatedScript;
 Script.complete(fileContent);
