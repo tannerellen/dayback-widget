@@ -23,7 +23,7 @@ const updatedConfig = updateConfig(oldConfig, newConfig);
 const updatedScript = applyConfig(updatedConfig, newScript);
 
 return updatedScript;
-Script.complete(fileContent);
+Script.complete();
 
 // Functions
 function applyConfig(config, script) {
@@ -59,10 +59,10 @@ function getConfig(script) {
 }
 
 function updateConfig(oldConfig, newConfig) {
-  const newConfigLines = newConfig.split('/n');
+  const newConfigLines = newConfig.split('\n');
   let newConfigDefinitions = configToDefinitions(newConfigLines);
 
-  const oldConfigLines = oldConfig.split('/n');
+  const oldConfigLines = oldConfig.split('\n');
   let oldConfigDefinitions = configToDefinitions(oldConfigLines);
   console.log(newConfigDefinitions);
 
@@ -75,7 +75,7 @@ function updateConfig(oldConfig, newConfig) {
     newConfigLines[lineNumber] = newConfigLines[lineNumber].replace(newConfigDefinitions[key].value, newConfigDefinitions[key].oldValue);
   });
 
-  return newConfigLines.join('/n');
+  return newConfigLines.join('\n');
 }
 
 function configToDefinitions(configLines) {
