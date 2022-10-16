@@ -9,23 +9,70 @@ const oldScript = fm.readString(path);
 
 // If there is no existing script just return the new script
 if (!oldScript) {
-  return newScript;
+  return {
+    isInstalled: false,
+  };
 }
 
+// Create array of lines for script files
+const newScriptLines = newScript.split('\n');
+const oldScriptLines = oldScript.split('\n');
+
+const newVersion = getScriptVersion(newScriptLines);
+const oldVersion = getScriptVersion(oldScriptLines);
+
 // Get just the config blocks from the script files
-const oldConfig = getConfig(oldScript);
 const newConfig = getConfig(newScript);
+const oldConfig = getConfig(oldScript);
 
 // Merge changes from old config into the new one
 const updatedConfig = updateConfig(oldConfig, newConfig);
 
-// Apply all config changes to the new script
-const updatedScript = applyConfig(updatedConfig, newScript);
+// Apply all config changes to the new script and apply Scriptable config to the top
+const updatedScript = (getScriptableConfig(oldScriptLines)) + ('\n') + (applyConfig(updatedConfig, newScript));
 
-return updatedScript;
+return {
+  isInstalled: true,
+  updatedScript: updatedScript,
+  hasUpdate: newVersion !== oldVersion,
+  newVersion: newVersion,
+  previousVersion: oldVersion,
+};
+
 Script.complete();
 
 // Functions
+function getScriptableConfig(scriptLines) {
+  // Takes array of lines as input
+  if (!scriptLines || !scriptLines.length) {
+    return '';
+  }
+
+  for (let i = 0; i < scriptLines.length; i++) {
+    if (scriptLines[i].includes('Variables used by Scriptable')) {
+      return scriptLines.slice(i, 3).join('\n');
+    }
+  }
+  return '';
+}
+
+function getScriptVersion(scriptLines) {
+  // Takes array of lines as input
+  if (!scriptLines || !scriptLines.length) {
+    return '';
+  }
+  for (let i = 0; i < scriptLines.length; i++) {
+    if (scriptLines[i].includes('Version')) {
+      let versionSplit = scriptLines[i].split(':');
+      if (versionSplit && versionSplit[1]) {
+        return versionSplit[1].trim();
+      }
+      return '';
+    }
+  }
+  return '';
+}
+
 function applyConfig(config, script) {
   if (!config) {
     return script;
@@ -64,7 +111,6 @@ function updateConfig(oldConfig, newConfig) {
 
   const oldConfigLines = oldConfig.split('\n');
   let oldConfigDefinitions = configToDefinitions(oldConfigLines);
-  console.log(newConfigDefinitions);
 
   Object.entries(oldConfigDefinitions).forEach(([key, configValue]) => {
     if (!newConfigDefinitions[key]) {
@@ -82,7 +128,6 @@ function configToDefinitions(configLines) {
   let configDefinitions = {};
   for (let i = 0; i < configLines.length; i++) {
     const configKeyValue = configToKeyValue(configLines[i], i);
-    console.log(configKeyValue);
     if (configKeyValue.key) {
       configDefinitions[configKeyValue.key] = configKeyValue.value;
     }
@@ -143,7 +188,6 @@ function configToKeyValue(configLine, lineNumber) {
     if (!assignmentSplit.length) {
       return configResult;
     }
-    console.log('assignmentSplit', assignmentSplit);
     let assignment = hasDeclaration ? assignmentSplit[1] : assignmentSplit[0];
     if (!assignment) {
       return configResult;
