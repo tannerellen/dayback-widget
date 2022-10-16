@@ -91,6 +91,7 @@ function configToDefinitions(configLines) {
 }
 
 function configToKeyValue(configLine, lineNumber) {
+  const valueTokenString = '!!!!~~~~~~~~~||#||~~~~~~~~~!!!!'
   let configResult = {};
   let valueResult = {};
   let definitionSeparator;
@@ -107,12 +108,23 @@ function configToKeyValue(configLine, lineNumber) {
     hasDeclaration = false;
   }
   if (definitionSeparator) {
+    // Replaced quoted content with temporary token
+    let regex = /"(.*?)" | '(.*?)'/;
+    let quotedValue = configLine.match(regex);
+    if (quotedValue && quotedValue[1]) {
+      configLine = configLine.replace(quotedValue[1], valueTokenString);
+    }
     const configSplit = configLine.split(definitionSeparator);
     if (!configSplit.length) {
       return configResult;
     }
     
     let configValue = configSplit[1];
+
+    // Replace temporary token with original value
+    if (quotedValue && quotedValue[1]) {
+      configValue = configValue.replace(valueTokenString, quotedValue[1]);
+    }
     if (configValue !== null) {
       if (configValue.includes(closingCharacter)) {
         configValue = configValue.split(closingCharacter);
