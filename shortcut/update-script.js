@@ -109,8 +109,9 @@ function configToKeyValue(configLine, lineNumber) {
   }
   if (definitionSeparator) {
     // Replaced quoted content with temporary token
-    let regex = /"(.*?)" | '(.*?)'/;
-    let quotedValue = configLine.match(regex);
+    const regexDouble = /"(.*?)"/; // Between double quotes
+    const regexSingle = /'(.*?)'/; // Between single quotes
+    let quotedValue = configLine.match(regexDouble) || configLine.match(regexSingle);
     if (quotedValue && quotedValue[1]) {
       configLine = configLine.replace(quotedValue[1], valueTokenString);
     }
