@@ -55,6 +55,8 @@ const TRANSLATIONS = {
 // You shouldn't need to edit below this line
 // ------------------------------------------
 
+const shortcutParams = args.shortcutParameter;
+
 const domain = 'https://app.dayback.com';
 
 const now = new Date();
@@ -131,9 +133,16 @@ widget.refreshAfterDate = refreshDate;
 Script.setWidget(widget);
 Script.complete();
 
-// Won't show when using as widget
-if (config.runsInApp) {
-	widget.presentLarge();
+if (shortcutParams && shortcutParams.showWebview) {
+	// Present a webview when the parameter is set
+	webview.present();
+}
+else {
+	// Won't show when using as widget
+	if (config.runsInApp) {
+		widget.presentLarge();
+	}
+		
 }
 
 return eventsPayload;
