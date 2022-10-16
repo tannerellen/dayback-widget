@@ -17,6 +17,7 @@ if (!oldScript) {
     isInstalled: false,
     shortcutVersion: shortcutVersion,
     shortcutUrl: shortcutUrl,
+    shortcutUrlEncoded: encodeURIComponent(shortcutUrl),
     hasShortcutUpdate: shortcutVersion > installedShortcutVersion,
   };
 }
@@ -46,6 +47,7 @@ return {
   previousVersion: oldVersion,
   shortcutVersion: shortcutVersion,
   shortcutUrl: shortcutUrl,
+  shortcutUrlEncoded: encodeURIComponent(shortcutUrl),
   hasShortcutUpdate: shortcutVersion > installedShortcutVersion,
 };
 
