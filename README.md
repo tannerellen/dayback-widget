@@ -10,6 +10,8 @@ It is recommended to create a bookmark just for you in <a href="https://dayback.
 * Utilize text filters to filter only events that are important to you. This usually entails filtering based on your name. a good starting point is "YourName or holidays" for exaple to see events assigned to you and any national holidays in Google Calendar. Read the <a href="https://docs.dayback.com/article/114-filter-options" target="_blank">documentation on text filters</a> to get the filtering just right.
 * It's recommended to close the sidebar when creating the bookmark for a better iPad experience.
 
+You can create a bookmark on any device, but it's easiest to make one on a non mobile device like your desktop and laptop. Just make sure when you create the bookmark you close the sidebar first so it works well when loading it on a mobile device.
+
 # Installation
 
 There are two ways to install the DayBack Agendar Widget. The easy way is recommended.
