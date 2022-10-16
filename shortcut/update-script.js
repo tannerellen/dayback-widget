@@ -1,5 +1,5 @@
 const shortcutVersion = 1.0;
-const shortuctUrl = 'https://www.icloud.com/shortcuts/4a2127c98382489b8c1655121041656e';
+const shortcutUrl = 'https://www.icloud.com/shortcuts/4a2127c98382489b8c1655121041656e';
 
 const params = args.shortcutParameter;
 const installedShortcutVersion = params.installedShortcutVersion;
