@@ -77,3 +77,11 @@ Now you are all done!
     * You will need to access DayBack on any device and Authorize any calendar sources again (ie. Google Calendar).
 
 Now you are all done!
+
+# Updating
+
+Updates can be performed by running the DayBack Widget Helper shortcut. If there is an update to the shortcut itself it will prompt do download and install the new version replacing the existing one. 
+
+If for some reason the shortcut cannot update itself (usually because the shortcut URL has changed) you can [manually download a new one here](https://www.icloud.com/shortcuts/4a2127c98382489b8c1655121041656e). 
+
+Make sure to replace the existing one when asked.
