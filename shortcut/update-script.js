@@ -1,8 +1,12 @@
-let params = args.shortcutParameter;
-let name = params.scriptName;
-let fm = FileManager.iCloud();
-let dir = fm.documentsDirectory();
-let path = fm.joinPath(dir, name + ".js");
+const shortcutVersion = 1.0;
+const shortuctUrl = 'https://www.icloud.com/shortcuts/4a2127c98382489b8c1655121041656e';
+
+const params = args.shortcutParameter;
+const installedShortcutVersion = params.installedShortcutVersion;
+const name = params.scriptName;
+const fm = FileManager.iCloud();
+const dir = fm.documentsDirectory();
+const path = fm.joinPath(dir, name + ".js");
 
 const newScript = params.newScript;
 const oldScript = fm.readString(path);
@@ -11,6 +15,9 @@ const oldScript = fm.readString(path);
 if (!oldScript) {
   return {
     isInstalled: false,
+    shortcutVersion: shortcutVersion,
+    shortcutUrl: shortcutUrl,
+    hasShortcutUpdate: shortcutVersion > installedShortcutVersion,
   };
 }
 
@@ -37,6 +44,9 @@ return {
   hasUpdate: newVersion !== oldVersion,
   newVersion: newVersion,
   previousVersion: oldVersion,
+  shortcutVersion: shortcutVersion,
+  shortcutUrl: shortcutUrl,
+  hasShortcutUpdate: shortcutVersion > installedShortcutVersion,
 };
 
 Script.complete();
