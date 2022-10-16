@@ -164,10 +164,10 @@ function buildWidget(eventsPayload) {
   		if (linesShown < MAX_LINES) {
     		setWidgetEntry(events[i], title);
     		linesShown++;
-    	
-    		if (!refreshDateUpdated && !events[i].allDay && sortTimes(refreshDate, endDate) > 0) {
+			
+			if (!refreshDateUpdated && !events[i].allDay && sortTimes(refreshDate, endDate) > 0 && sortTimes(endDate, now) > 0) {
 				refreshDateUpdated = true;
-    			refreshDate = endDate;
+    			refreshDate = endDate.setMinutes(endDate.getMinutes() + 1); // Make sure we don't set refresh date to now
     		} 
   		}
   		else {
