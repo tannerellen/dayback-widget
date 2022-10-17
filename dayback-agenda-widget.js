@@ -103,7 +103,7 @@ let refreshDate = new Date(now);
 refreshDate.setMinutes(now.getMinutes() + REFRESH_INTERVAL);
 
 // Refresh at the hour exactly if we are close to a threshold
-if ((now.getHours() <= 23 && refreshDate.getHours() >= 0) || (thresholdForNextDay !== 0 && now.getHours() < HOUR_THRESHOLD_FOR_NEXT_DAY && refreshDate.getHours() >= HOUR_THRESHOLD_FOR_NEXT_DAY)) {
+if ((now.getHours() <= 23 && refreshDate.getHours() >= 0 && refreshDate.getHours() < (REFRESH_INTERVAL / 60)) || (HOUR_THRESHOLD_FOR_NEXT_DAY !== 0 && now.getHours() < HOUR_THRESHOLD_FOR_NEXT_DAY && refreshDate.getHours() >= HOUR_THRESHOLD_FOR_NEXT_DAY)) {
 	refreshDate.setHours(now.getHours() + 1); // Set to the next hour from now
 	refreshDate.setMinutes(0, 0, 0); // Set minutes, seconds and miliseconds to zero
 }
@@ -164,7 +164,7 @@ function buildWidget(eventsPayload) {
   		if (linesShown < MAX_LINES) {
     		setWidgetEntry(events[i], title);
     		linesShown++;
-			
+
 			if (!refreshDateUpdated && !events[i].allDay && sortTimes(refreshDate, endDate) > 0 && sortTimes(endDate, now) > 0) {
 				refreshDateUpdated = true;
     			refreshDate = endDate.setMinutes(endDate.getMinutes() + 1); // Make sure we don't set refresh date to now
