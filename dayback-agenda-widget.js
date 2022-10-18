@@ -1,7 +1,7 @@
 /* *****************************************
 Name	: dayback-agenda-widget.js
 Author	: Tanner Ellen
-Version	: 1.0.6
+Version	: 1.0.7
 Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
 ***************************************** */
 
@@ -100,12 +100,16 @@ widget.backgroundColor  = new Color(COLORS.background);
 // Set refresh date to one hour from now
 let refreshDate = new Date(now);
 // Add refresh interval
-refreshDate.setMinutes(now.getMinutes() + REFRESH_INTERVAL);
+let compareDate = new Date(now);
+compareDate.setMinutes(now.getMinutes() + REFRESH_INTERVAL);
 
 // Refresh at the hour exactly if we are close to a threshold
-if ((now.getHours() <= 23 && refreshDate.getHours() >= 0 && refreshDate.getHours() < (REFRESH_INTERVAL / 60)) || (HOUR_THRESHOLD_FOR_NEXT_DAY !== 0 && now.getHours() < HOUR_THRESHOLD_FOR_NEXT_DAY && refreshDate.getHours() >= HOUR_THRESHOLD_FOR_NEXT_DAY)) {
+if ((now.getHours() <= 23 && compareDate.getHours() >= 0 && compareDate.getHours() < (REFRESH_INTERVAL / 60)) || (HOUR_THRESHOLD_FOR_NEXT_DAY !== 0 && now.getHours() < HOUR_THRESHOLD_FOR_NEXT_DAY && compareDate.getHours() >= HOUR_THRESHOLD_FOR_NEXT_DAY)) {
 	refreshDate.setHours(now.getHours() + 1); // Set to the next hour from now
 	refreshDate.setMinutes(0, 0, 0); // Set minutes, seconds and miliseconds to zero
+}
+else {
+	refreshDate.setMinutes(now.getMinutes() + REFRESH_INTERVAL);
 }
 
 const script = 'window.agendaCheck = function(callback) {callback()}; "load";'; // The load string is set because the evaluate javascript function needs some type of content set 
