@@ -1,7 +1,7 @@
 /* *****************************************
 Name	: dayback-agenda-widget.js
 Author	: Tanner Ellen
-Version	: 1.0.7
+Version	: 1.0.8
 Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
 ***************************************** */
 
@@ -28,6 +28,8 @@ const NOTIFICATIONS_ENABLED = false; // Set to true to show upcoming event notif
 const NOTIFICATIONS_MINUTES_BEFORE = 5; // How many minutes before event start to trigger notifications
 
 const NOTIFICATIONS_ALL_DAY_HOUR = 8; // The hour to notify for all day events 0 - 23 (since they don't have times)
+
+const USE_BOOKMARK_IN_BROWSER = false; // If set to true clicking the widget will open the browser to the widget bookmark instead of just dayback
 
 const COLORS = { // All colors are hex values
 	background: '#171717', // Widget background (use dark colors)
@@ -89,12 +91,14 @@ const viewDate = year + '-' + month + '-' + day;
 const url = domain + '?userToken=' + USER_TOKEN + '/#/?date=' + viewDate + '&bookmarkID=' + bookmarkID;
 const loadUrl = url + '&saveState=false';
 
+const clickUrl = USE_BOOKMARK_IN_BROWSER ? loadUrl : domain;
+
 const webview = new WebView();
 await webview.loadURL(loadUrl);
 
 const widget = new ListWidget();
 widget.setPadding(0, 0, 0, 0);
-widget.url = url; // Where to go when the widget is clicked
+widget.url = clickUrl; // Where to go when the widget is clicked
 widget.backgroundColor  = new Color(COLORS.background);
 
 // Set refresh date to one hour from now

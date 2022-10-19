@@ -25,7 +25,7 @@ There are two ways to install the DayBack Agendar Widget. The easy way is recomm
 
 2. [Install Scriptable](https://scriptable.app/) on your iOS device
 
-3. Intall the [DayBack Widget Helper iOS shortcut](https://www.icloud.com/shortcuts/4a2127c98382489b8c1655121041656e).
+3. Intall the [DayBack Widget Helper iOS shortcut](https://www.icloud.com/shortcuts/59210b3386994bdca55fc23a875a1eb7).
 
 4. Run the shortcut by tapping on it once inside the Shortcuts App.
 
@@ -84,6 +84,6 @@ Now you are all done!
 
 Updates can be performed by running the DayBack Widget Helper shortcut. If there is an update to the shortcut itself it will prompt do download and install the new version replacing the existing one. 
 
-If for some reason the shortcut cannot update itself (usually because the shortcut URL has changed) you can [manually download a new one here](https://www.icloud.com/shortcuts/4a2127c98382489b8c1655121041656e). 
-
-Make sure to replace the existing one when asked.
+You can [download the latest shortcut here](https://www.icloud.com/shortcuts/59210b3386994bdca55fc23a875a1eb7). 
+ 
+Make sure to replace the existing one when asked. Then run the shortcut by pressing on it to see if there are updates to the widget.
