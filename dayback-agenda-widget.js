@@ -1,7 +1,7 @@
 /* *****************************************
 Name	: dayback-agenda-widget.js
 Author	: Tanner Ellen
-Version	: 2.0.1
+Version	: 2.1.0
 Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
 ***************************************** */
 
@@ -158,6 +158,8 @@ Script.complete();
 
 if (shortcutParams && shortcutParams.showWebview) {
   // Present a webview when the parameter is set
+  const webview = new WebView();
+  await webview.loadURL(`${widgetDomain}/agenda/?userToken=${USER_TOKEN}`);
   webview.present();
 } else {
   // Won't show when using as widget
