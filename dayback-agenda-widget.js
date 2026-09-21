@@ -1,7 +1,7 @@
 /* *****************************************
 Name	: dayback-agenda-widget.js
 Author	: Tanner Ellen
-Version	: 2.1.3
+Version	: 2.2.0
 Desc	: An iOS widget to display a daily agenda from DayBack using Scriptable.app
 ***************************************** */
 
@@ -127,6 +127,18 @@ if (
   refreshDate.setMinutes(now.getMinutes() + REFRESH_INTERVAL);
 }
 
+if (shortcutParams && shortcutParams.showWebview) {
+  // Present a webview when the parameter is set
+  const webview = new WebView();
+  await webview.loadURL(
+    `${widgetDomain}/?userToken=${USER_TOKEN}&bookmarkID=${bookmarkID}`,
+  );
+  await webview.present();
+
+  // Wait a couple seconds after the webview closes before continuing
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+}
+
 let eventsPayload;
 try {
   const req = new Request(
@@ -137,7 +149,7 @@ try {
     throw new Error(eventsPayload.error);
   }
 } catch (err) {
-  console.error(err);
+  console.log(err);
   eventsPayload = [];
 }
 
@@ -159,18 +171,9 @@ widget.refreshAfterDate = refreshDate;
 Script.setWidget(widget);
 Script.complete();
 
-if (shortcutParams && shortcutParams.showWebview) {
-  // Present a webview when the parameter is set
-  const webview = new WebView();
-  await webview.loadURL(
-    `${widgetDomain}/?userToken=${USER_TOKEN}&bookmarkID=${bookmarkID}`,
-  );
-  webview.present();
-} else {
-  // Won't show when using as widget
-  if (config.runsInApp) {
-    widget.presentLarge();
-  }
+// Won't show when using as widget
+if (config.runsInApp) {
+  widget.presentLarge();
 }
 
 return eventsPayload;
