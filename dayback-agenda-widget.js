@@ -130,7 +130,7 @@ if (
 let eventsPayload;
 try {
   const req = new Request(
-    `https://${widgetDomain}/agenda/?userToken=${USER_TOKEN}&bookmarkID=${bookmarkID}`,
+    `${widgetDomain}/agenda/?userToken=${USER_TOKEN}&bookmarkID=${bookmarkID}`,
   );
   eventsPayload = await req.loadString();
 } catch (err) {
